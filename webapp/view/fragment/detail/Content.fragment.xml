@@ -1,0 +1,41 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<Table selectionChange="onPressItem" mode="SingleSelectLeft" id="idTable" width="auto" items="{viewModel>/List}" >
+		<headerToolbar>
+			<Toolbar id="addItemToolbar">
+					<Button text="{i18n>removeSelections}" press="onPressRemoveSelections" icon="sap-icon://activities" tooltip="{i18n>removeSelections}"
+					enabled="{viewModel>/DeleteEnabled}"/>
+				<ToolbarSpacer/>
+				<Button text="{i18n>deleteItem}" press="onPressDeleteItem" icon="sap-icon://delete" tooltip="{i18n>deleteItem}"
+					enabled="{viewModel>/DeleteEnabled}"/>
+			</Toolbar>
+		</headerToolbar>
+		<columns>	
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>Matnr}"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>Charg}"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>InOut}"/>
+			</Column>
+				<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>Owners}"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>Quantity}"/>
+			</Column>
+		</columns>
+		<items>
+			<ColumnListItem >
+				<cells>				
+					<ObjectNumber state="Error" number="{viewModel>Matnr}"/>
+					<ObjectNumber state="Success" number="{viewModel>Charg}"/>
+					<ObjectNumber state="Warning" number="{viewModel>Cat}"/>
+					<ObjectNumber state="Information" number="{viewModel>Owner}"/>
+					<ObjectNumber number="{path:'viewModel>Menge' ,formatter: '.formatter.numberUnit'}" unit="{viewModel>Meins}"/>
+				</cells>
+			</ColumnListItem>
+		</items>
+	</Table>
+</core:FragmentDefinition>

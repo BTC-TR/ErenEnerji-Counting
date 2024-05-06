@@ -1,0 +1,35 @@
+<c:FragmentDefinition
+	xmlns="sap.m"
+	xmlns:c="sap.ui.core"
+>
+<Dialog title="Depo Yeri Arama Yardım">
+        <subHeader>
+            <OverflowToolbar>
+				<SearchField liveChange="warehouseSearchHelpSearch" width="100%" />
+			</OverflowToolbar>
+        </subHeader>
+        <content>
+            <List
+                id="warehouseSearchHelp"
+                items="{jsonModel>/detailScreenInputValues/fetchCountingSet}"
+                selectionChange="_detailPageInputChangeEnabled"
+                mode="SingleSelectMaster"
+                growing="true"
+                growingThreshold="5"
+                includeItemInSelection="true">
+                <infoToolbar>
+                    <OverflowToolbar visible="false" id="idInfoToolbar">
+                        <Label id="idFilterLabel" />
+                    </OverflowToolbar>
+                </infoToolbar>
+                <StandardListItem
+                    title="{jsonModel>LocParentLgpla}"
+                    iconDensityAware="false"
+                    iconInset="false" />
+            </List>
+        </content>
+        <buttons>
+            <Button text="{i18n>cancel}" press="closeWarehouseSearchHelp"></Button>
+        </buttons>
+    </Dialog>
+</c:FragmentDefinition>

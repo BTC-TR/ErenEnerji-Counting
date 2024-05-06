@@ -1,0 +1,32 @@
+
+[data-meins] {
+    position: relative;
+}
+[data-meins]::after {
+    --fontsize: .875rem;
+    content: attr(data-meins);
+    position: absolute;
+    right: 11px;
+    top: calc(50% - calc(var(--fontsize) / 2));
+    font-size: var(--fontsize);
+    font-weight: bold;
+    color: rgb(147 147 147);
+}
+label {
+    text-wrap: nowrap !important;
+}
+.sapUiFormResGrid>div {
+    padding: 1rem 0 !important;
+}
+@media screen and (max-width: 576px) {
+    [data-meins]::after{
+        top: calc(70% - calc(var(--fontsize) / 2));
+    }
+  }
+
+.sapMSwt.sapMSwtOff:not(.sapMSwtAcceptReject) {
+    background-color: #feebeb !important;
+}
+.sapMSwtLabelOff {
+    color: black !important;
+}

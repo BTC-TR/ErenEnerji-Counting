@@ -1,0 +1,25 @@
+
+<mvc:View xmlns:m="sap.m" xmlns:core="sap.ui.core" xmlns:mvc="sap.ui.core.mvc" xmlns="sap.uxap"
+	controllerName="com.eren.counting.controller.Detail">
+	<ObjectPageLayout showHeaderContent="{viewModel>/visibleHeader}" id="_IDGenObjectPageLayout1" showFooter="true">		
+		<sections>
+			<ObjectPageSection id="_IDGenObjectPageSection1" title="{i18n>Information}">
+				<subSections>
+					<ObjectPageSubSection id="_IDGenObjectPageSubSection1">
+						<core:Fragment type="XML" fragmentName="com.eren.counting.view.fragment.detail.Header"/>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+			<ObjectPageSection id="_IDGenObjectPageSection2" >
+				<subSections>
+					<ObjectPageSubSection id="paymentSubSection" showTitle="false">
+						<core:Fragment type="XML" fragmentName="com.eren.counting.view.fragment.detail.Content"/>
+					</ObjectPageSubSection>
+				</subSections>
+			</ObjectPageSection>
+		</sections>
+		<footer>
+			<core:Fragment type="XML" fragmentName="com.eren.counting.view.fragment.detail.Footer"/>
+		</footer>
+	</ObjectPageLayout>
+</mvc:View>

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZEWM_COUNTING_SRV" xml:lang="tr" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <Annotation Term="Core.SchemaVersion" String="1.0.0" xmlns="http://docs.oasis-open.org/odata/ns/edm"/>
+            <EntityType Name="CountingCheck" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="IvDocNumber"/>
+                    <PropertyRef Name="IvDocYear"/>
+                    <PropertyRef Name="IvLgnum"/>
+                </Key>
+                <Property Name="IvDocNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Fzk.env.belgesi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvDocYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Belge yılı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvLgnum" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="İleti tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:unicode="false" sap:label="İleti metni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="CountingGetHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="IvDocNumber"/>
+                </Key>
+                <Property Name="IvDocNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Fzk.env.belgesi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvDocYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Belge yılı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvLgnum" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="to_items" Relationship="ZEWM_COUNTING_SRV.AssoCountingGetHeaderToItems" FromRole="FromRole_AssoCountingGetHeaderToItems" ToRole="ToRole_AssoCountingGetHeaderToItems"/>
+                <NavigationProperty Name="to_return" Relationship="ZEWM_COUNTING_SRV.AssoCountingGetHeaderToReturn" FromRole="FromRole_AssoCountingGetHeaderToReturn" ToRole="ToRole_AssoCountingGetHeaderToReturn"/>
+            </EntityType>
+            <EntityType Name="CountingGetItems" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GuidDoc"/>
+                </Key>
+                <Property Name="ProcessType" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Proses türü" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lgnum" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="GuidDoc" Type="Edm.Binary" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="GUID" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Fzk.env.belgesi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Belge yılı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ItemNo" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="Kalem" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocStatus" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Fzk.env.durumu" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ItemType" Type="Edm.String" Nullable="false" MaxLength="2" sap:unicode="false" sap:label="Satır tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LocParentLgnum" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LocParentLgtyp" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LocParentLgpla" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Depo adresi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="CountingGetHeader" Relationship="ZEWM_COUNTING_SRV.AssoCountingGetHeaderToItems" FromRole="ToRole_AssoCountingGetHeaderToItems" ToRole="FromRole_AssoCountingGetHeaderToItems"/>
+            </EntityType>
+            <EntityType Name="CountingGetReturn" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Type"/>
+                </Key>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="İleti tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:unicode="false" sap:label="İleti metni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="BarcodeQueryHeader" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="IvCharg"/>
+                    <PropertyRef Name="IvLgpla"/>
+                    <PropertyRef Name="IvMatnr"/>
+                </Key>
+                <Property Name="IvCharg" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Parti" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvLgpla" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Depo adresi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="IvMatnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Ürün" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="to_returns" Relationship="ZEWM_COUNTING_SRV.AssoBarcodeHeaderToReturns" FromRole="FromRole_AssoBarcodeHeaderToReturns" ToRole="ToRole_AssoBarcodeHeaderToReturns"/>
+                <NavigationProperty Name="to_items" Relationship="ZEWM_COUNTING_SRV.AssoBarcodeHeaderToItem" FromRole="FromRole_AssoBarcodeHeaderToItem" ToRole="ToRole_AssoBarcodeHeaderToItem"/>
+            </EntityType>
+            <EntityType Name="BarcodeQueryItems" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="GuidStock"/>
+                </Key>
+                <Property Name="GuidStock" Type="Edm.Binary" Nullable="false" MaxLength="16" sap:unicode="false" sap:label="Stok GUID'i" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Ürün" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Charg" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Parti" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Maktx" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Ürün tanımı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Owner" Type="Edm.String" Nullable="false" MaxLength="28" sap:unicode="false" sap:label="Sahip" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OwnerText" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="Sahip tanımı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Meins" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="Tml.ölçü birimi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false" sap:semantics="unit-of-measure"/>
+            </EntityType>
+            <EntityType Name="BarcodeQueryReturns" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                    <PropertyRef Name="Number"/>
+                </Key>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="İleti tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Id" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="İleti sınıfı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Number" Type="Edm.String" Nullable="false" MaxLength="3" sap:unicode="false" sap:label="İleti numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:unicode="false" sap:label="İleti metni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LogNo" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Günlük no." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LogMsgNo" Type="Edm.String" Nullable="false" MaxLength="6" sap:unicode="false" sap:label="İleti numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV1" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="İleti değişkeni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV2" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="İleti değişkeni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV3" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="İleti değişkeni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MessageV4" Type="Edm.String" Nullable="false" MaxLength="50" sap:unicode="false" sap:label="İleti değişkeni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Parameter" Type="Edm.String" Nullable="false" MaxLength="32" sap:unicode="false" sap:label="Parametre adı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Row" Type="Edm.Int32" Nullable="false" sap:unicode="false" sap:label="Parametre st." sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Field" Type="Edm.String" Nullable="false" MaxLength="30" sap:unicode="false" sap:label="Alan adı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="System" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Mantıksal sistem" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="AddressCount" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="Lgnum"/>
+                    <PropertyRef Name="DocNumber"/>
+                    <PropertyRef Name="DocYear"/>
+                    <PropertyRef Name="Lgpla"/>
+                    <PropertyRef Name="Matnr"/>
+                    <PropertyRef Name="Charg"/>
+                    <PropertyRef Name="Menge"/>
+                    <PropertyRef Name="Owner"/>
+                </Key>
+                <Property Name="Lgnum" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Depo numarası" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocNumber" Type="Edm.String" Nullable="false" MaxLength="20" sap:unicode="false" sap:label="Fzk.env.belgesi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocYear" Type="Edm.String" Nullable="false" MaxLength="4" sap:unicode="false" sap:label="Belge yılı" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Lgpla" Type="Edm.String" Nullable="false" MaxLength="18" sap:unicode="false" sap:label="Depo adresi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Matnr" Type="Edm.String" Nullable="false" MaxLength="40" sap:unicode="false" sap:label="Malzeme" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Charg" Type="Edm.String" Nullable="false" MaxLength="10" sap:unicode="false" sap:label="Parti" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Menge" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3" sap:unicode="false" sap:label="Miktar" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Owner" Type="Edm.String" Nullable="false" MaxLength="28" sap:unicode="false" sap:label="Sahip" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" MaxLength="1" sap:unicode="false" sap:label="İleti tipi" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Message" Type="Edm.String" Nullable="false" MaxLength="220" sap:unicode="false" sap:label="İleti metni" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="AssoBarcodeHeaderToItem" sap:content-version="1">
+                <End Type="ZEWM_COUNTING_SRV.BarcodeQueryHeader" Multiplicity="1" Role="FromRole_AssoBarcodeHeaderToItem"/>
+                <End Type="ZEWM_COUNTING_SRV.BarcodeQueryItems" Multiplicity="*" Role="ToRole_AssoBarcodeHeaderToItem"/>
+            </Association>
+            <Association Name="AssoBarcodeHeaderToReturns" sap:content-version="1">
+                <End Type="ZEWM_COUNTING_SRV.BarcodeQueryHeader" Multiplicity="1" Role="FromRole_AssoBarcodeHeaderToReturns"/>
+                <End Type="ZEWM_COUNTING_SRV.BarcodeQueryReturns" Multiplicity="*" Role="ToRole_AssoBarcodeHeaderToReturns"/>
+            </Association>
+            <Association Name="AssoCountingGetHeaderToReturn" sap:content-version="1">
+                <End Type="ZEWM_COUNTING_SRV.CountingGetHeader" Multiplicity="1" Role="FromRole_AssoCountingGetHeaderToReturn"/>
+                <End Type="ZEWM_COUNTING_SRV.CountingGetReturn" Multiplicity="1" Role="ToRole_AssoCountingGetHeaderToReturn"/>
+            </Association>
+            <Association Name="AssoCountingGetHeaderToItems" sap:content-version="1">
+                <End Type="ZEWM_COUNTING_SRV.CountingGetHeader" Multiplicity="1" Role="FromRole_AssoCountingGetHeaderToItems"/>
+                <End Type="ZEWM_COUNTING_SRV.CountingGetItems" Multiplicity="*" Role="ToRole_AssoCountingGetHeaderToItems"/>
+            </Association>
+            <EntityContainer Name="ZEWM_COUNTING_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="CountingCheckSet" EntityType="ZEWM_COUNTING_SRV.CountingCheck" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CountingGetHeaderSet" EntityType="ZEWM_COUNTING_SRV.CountingGetHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CountingGetItemsSet" EntityType="ZEWM_COUNTING_SRV.CountingGetItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="CountingGetReturnSet" EntityType="ZEWM_COUNTING_SRV.CountingGetReturn" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BarcodeQueryHeaderSet" EntityType="ZEWM_COUNTING_SRV.BarcodeQueryHeader" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BarcodeQueryItemsSet" EntityType="ZEWM_COUNTING_SRV.BarcodeQueryItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="BarcodeQueryReturnsSet" EntityType="ZEWM_COUNTING_SRV.BarcodeQueryReturns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <EntitySet Name="AddressCountSet" EntityType="ZEWM_COUNTING_SRV.AddressCount" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:content-version="1"/>
+                <AssociationSet Name="AssoCountingGetHeaderToReturnSet" Association="ZEWM_COUNTING_SRV.AssoCountingGetHeaderToReturn" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CountingGetHeaderSet" Role="FromRole_AssoCountingGetHeaderToReturn"/>
+                    <End EntitySet="CountingGetReturnSet" Role="ToRole_AssoCountingGetHeaderToReturn"/>
+                </AssociationSet>
+                <AssociationSet Name="AssoBarcodeHeaderToReturnsSet" Association="ZEWM_COUNTING_SRV.AssoBarcodeHeaderToReturns" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BarcodeQueryHeaderSet" Role="FromRole_AssoBarcodeHeaderToReturns"/>
+                    <End EntitySet="BarcodeQueryReturnsSet" Role="ToRole_AssoBarcodeHeaderToReturns"/>
+                </AssociationSet>
+                <AssociationSet Name="AssoCountingGetHeaderToItemsSet" Association="ZEWM_COUNTING_SRV.AssoCountingGetHeaderToItems" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="CountingGetHeaderSet" Role="FromRole_AssoCountingGetHeaderToItems"/>
+                    <End EntitySet="CountingGetItemsSet" Role="ToRole_AssoCountingGetHeaderToItems"/>
+                </AssociationSet>
+                <AssociationSet Name="AssoBarcodeHeaderToItemSet" Association="ZEWM_COUNTING_SRV.AssoBarcodeHeaderToItem" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="BarcodeQueryHeaderSet" Role="FromRole_AssoBarcodeHeaderToItem"/>
+                    <End EntitySet="BarcodeQueryItemsSet" Role="ToRole_AssoBarcodeHeaderToItem"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="https://vherjds4ap01.sap.erenenerji.com.tr:44300/sap/opu/odata/sap/ZEWM_COUNTING_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="https://vherjds4ap01.sap.erenenerji.com.tr:44300/sap/opu/odata/sap/ZEWM_COUNTING_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
