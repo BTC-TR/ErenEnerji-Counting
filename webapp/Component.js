@@ -30,6 +30,8 @@ sap.ui.define([
                 this.getRouter().initialize();
                 this.setModel(models.createDeviceModel(), "device");
 
+                this.getRouter().navTo("RouteMain", {});
+
                 // set the device model
  
             },

@@ -54,14 +54,7 @@ sap.ui.define([
          * Event handler when the share by E-Mail button has been clicked
          * @public
          */
-        onShareEmailPress: function () {
-            var oViewModel = (this.getModel("objectView") || this.getModel("worklistView"));
-            URLHelper.triggerEmail(
-                null,
-                oViewModel.getProperty("/shareSendEmailSubject"),
-                oViewModel.getProperty("/shareSendEmailMessage")
-            );
-        },
+
         _showMessageBox: function (message, messageType) {
             if (messageType === "S") {
                 MessageBox.success(message);
@@ -72,64 +65,23 @@ sap.ui.define([
             }
 
         },
-        _showMessageBoxWithRoute: function (message, messageType, ifSShow, routeName) {
-            let that = this;
-            if (messageType === "S" && !ifSShow)
-                return
-            if (messageType === "S") {
-                MessageBox.success(message);
-            } else {
-                MessageBox.error(message, {
-                    onClose: function (sAction) {
-                        that.getRouter().navTo(routeName)
-                    }
-                });
-            }
 
-        },
-        _uppercaseInput: function (oEvent) {
-            var _oInput = oEvent.getSource();
-            var val = _oInput.getValue();
-            val = val.toUpperCase();
-            val = val.trim();
-            _oInput.setValue(val);
-            this._detailPageValidateInputs(oEvent);
-        },
+		getRead: function (sSet, oModel) {
+			return new Promise(function (fnSuccess, fnReject) {
+				const mParameters = {
+					success: fnSuccess,
+					error: fnReject
+				};
+				oModel.read(sSet, mParameters);
+			});
+		},
+
+    
         _focusOnInput: function (id) {
             let oView = this.getView();
             oView.byId(id).focus();
         },
-        _validateInput: function (oInput) {
-            var sValueState = "None";
-            var bValidationError = false;
-            var oBinding = oInput.getBinding("value");
-            var selectedKey = false;
-            if (oBinding === undefined) oBinding = oInput.getBinding("selectedKey");
-
-            try {
-                try {
-                    selectedKey = oInput.getForceSelection() ? false : true;
-                } catch (error) {
-                    selectedKey = false
-                }
-                if (selectedKey) {
-                    oBinding.getType().validateValue(oInput.getSelectedKey());
-                } else {
-                    oBinding.getType().validateValue(oInput.getValue());
-                }
-
-
-            } catch (oException) {
-                // console.log(oException)
-                // oInput.setValueStateText(oException.message)
-                sValueState = "Error";
-                bValidationError = true;
-            }
-
-            oInput.setValueState(sValueState);
-
-            return bValidationError;
-        },
+        
     });
 
 });

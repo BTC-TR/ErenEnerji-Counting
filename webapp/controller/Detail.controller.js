@@ -1,33 +1,23 @@
 sap.ui.define([
     "./BaseController",
     "../model/formatter",
-    'sap/ui/Device',
     "sap/m/MessageBox",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    'sap/ui/core/Fragment',
-    'sap/ui/model/Sorter',
     "sap/m/library",
     "sap/m/Dialog",
     "sap/m/Button",
-    "sap/m/Label",
-    "sap/m/MessageToast",
     "sap/m/Text",
-    "sap/m/TextArea"
 ], function (
     BaseController,
     formatter,
-    Device,
     MessageBox,
     Filter,
     FilterOperator,
-    Fragment,
-    Sorter,
-    mobileLibrary, Dialog, Button,
-    Label,
-    MessageToast,
-    Text,
-    TextArea
+    mobileLibrary,
+    Dialog,
+    Button,
+    Text
 ) {
     "use strict";
 
@@ -70,21 +60,34 @@ sap.ui.define([
 
         },
         onChangeBarcode: async function (oEvent) {
-            const oModel = this.getModel(),
-                oViewModel = this.getModel("viewModel");
+
+            const oViewModel = this.getModel("viewModel");
+            this.getView().byId("idSwitchInOut").setVisible(false);
+
             let oSource = oEvent.getSource().getValue(),
                 oMatnr = oSource.split("|")[0],
-                oCharg = (oSource.split("|")[1]) ? (oSource.split("|")[1]) : (oSource.split("|")[1] = ""),
+                oCharg = oSource.split("|")[1] ? oSource.split("|")[1] : "",
                 oLgpla = oViewModel.getData().Lgpla,
                 fnSuccess = (oData) => {
                     this.getModel().refresh(true);
+                    //error
                     if (oData.to_returns.results.length > 0) {
                         sap.m.MessageBox.error(oData.to_returns.results[0].Message);
+                        oViewModel.setProperty("/Owners", []);
+                        oViewModel.setProperty("/BarcodeForm", {});
+                        oViewModel.setProperty("/Barcode", "");
+
                     } else {
+                        //success
                         oViewModel.setProperty("/Owners", oData.to_items.results);
                         oViewModel.setProperty("/BarcodeForm", oData.to_items.results.at(-1));
-                        let iIndex = parseInt(oData.to_items.results.at(-1).OwnerText.slice(0, 1));
-                        this._setStockType(iIndex);
+
+                        //if the owner list only one then set the first row to stock type 
+                        if (oData.to_items.results.length === 1) {
+                            oViewModel.setProperty("/Owner", oData.to_items.results.at(-1).Owner);
+                            let iIndex = parseInt(oData.to_items.results.at(-1).OwnerText.slice(0, 1));
+                            this._setStockType(iIndex);
+                        }
 
                     }
                     sap.ui.core.BusyIndicator.hide();
@@ -93,7 +96,7 @@ sap.ui.define([
                 fnError = (err) => {
                     sap.ui.core.BusyIndicator.hide();
 
-                    this._showMessage(err.responseText);
+                    this._showMessageBox(err.responseText, "E");
                 },
                 fnFinally = () => {
                     oViewModel.setProperty("/busy", false);
@@ -121,7 +124,7 @@ sap.ui.define([
                 sap.ui.core.BusyIndicator.show(0);
                 let fnSuccess = (oData) => {
                     if (oData.Type === "E") {
-                        this._showMessageBox(oData.Message, oData.Type, true);
+                        this._showMessageBox(oData.Message, oData.Type);
                     } else {
                         //  this._showMessageBox(oData.Message, oData.Type, true);
                         this._clearForm("AAC"); //After Address Count
@@ -142,7 +145,6 @@ sap.ui.define([
         onChangeOwner: async function (oEvent) {
             let iIndex = oEvent.getParameter("selectedItem").getProperty("text").slice(0, 1);
             this._setStockType(iIndex);
-
         },
 
 
@@ -200,6 +202,7 @@ sap.ui.define([
                 oViewModel = this.getModel("viewModel");
 
             if (oSelectedItem) {
+                oViewModel.setProperty("/LgplaValueState", "Success");
                 oViewModel.setProperty("/Lgpla", oSelectedItem.getTitle());
             }
             oEvent.getSource().getBinding("items").filter([]);
@@ -239,16 +242,59 @@ sap.ui.define([
         onPressRemoveSelections: function () {
             this.getView().byId("idTable").removeSelections();
         },
-        onEmptyShelf: async function (oEvent) {
+        onEmptyShelf: async function () {
+            let that = this;
+            MessageBox.warning(this.getResourceBundle().getText("errorShelf"),{
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+                    if (sAction === "OK") {
+                        that._setAsEmptyShelf();
+                    }
+                }
+            });
+        },
+
+        onClear: function () {
+            this._clearForm("AAC");
+        },
+
+        onLgplaInputChange: function (oEvent) {
+
+            let oViewModel = this.getView().getModel("viewModel"),
+                oInputValue = oEvent.getSource().getValue(),
+                oList = oViewModel.getProperty("/LgplaList"),
+                oBool = true;
+
+            for (let i in oList) {
+                if (oList[i].LocParentLgpla === oInputValue) {
+                    oBool = false;
+                }
+            }
+
+            //Eğer eşleşmediyse
+            if (oBool) {
+                oViewModel.setProperty("/Lgpla", "");
+                oViewModel.setProperty("/LgplaValueState", "Error");
+            }
+            else {
+                oViewModel.setProperty("/LgplaValueState", "Success");
+            }
 
         },
         /* =========================================================== */
         /* internal methods                                            */
         /* =========================================================== */
 
+
+
         _onObjectMatched: async function () {
             let oViewModel = this.getModel("viewModel"),
                 oObject = oViewModel.getProperty("/DetailData");
+            if (!oObject) {
+                return;
+            }
+
             if (oObject.length === 1) {
                 oViewModel.setProperty("/Lgpla", oObject[0].LocParentLgpla);
                 //  oViewModel.setProperty("/Lgpla", "B-01-01-02");
@@ -256,6 +302,44 @@ sap.ui.define([
             oViewModel.setProperty("/LgplaList", oObject);
             this.getView().byId("idSwitchInOut").setVisible(false);
             this._getCountingDetail();
+        },
+
+
+        _setAsEmptyShelf: function () {
+
+            let oViewModel = this.getModel("viewModel"),
+                oDocNumber = oViewModel.getProperty("/DocNumber"),
+                oDocYear = oViewModel.getProperty("/DocYearD"),
+                oLgpla = oViewModel.getProperty("/Lgpla"),
+                oLgnum = oViewModel.getProperty("/Lgnum"),
+                oModel = this.getView().getModel(),
+                that = this;
+
+            if (oLgpla) {
+                let sPath = this.getModel().createKey("/EmptyShelfSet", {
+                    IvDocNumber: oDocNumber,
+                    IvDocYear: oDocYear,
+                    IvLgnum: oLgnum,
+                    IvLgpla: oLgpla
+                });
+
+                this.getRead(sPath, oModel)
+                    .then(function (oData) {
+
+                        let oMessage = oData.Message,
+                            oType = oData.Type;
+                        // console.log(oData, oResponse);
+                        that._showMessageBox(oMessage, oType);
+                        that._clearForm("");
+
+                    })
+                    .catch((err) => {
+                        debugger;
+                    })
+                    .finally(() => { });
+
+            }
+
         },
         _getCountingDetail: async function () {
             const oViewModel = this.getModel("viewModel"),
@@ -312,9 +396,9 @@ sap.ui.define([
             sap.ui.core.BusyIndicator.show(0);
             let fnSuccess = (oData) => {
                 if (oData.Type === "E") {
-                    this._showMessageBox(oData.Message, oData.Type, true);
+                    this._showMessageBox(oData.Message, oData.Type);
                 } else {
-                    this._showMessageBox(oData.Message, oData.Type, true);
+                    this._showMessageBox(oData.Message, oData.Type);
                     this._getCountingDetail();
                 }
             },
@@ -369,6 +453,12 @@ sap.ui.define([
             });
         },
         _setStockType: async function (iIndex) {
+
+            if (iIndex === "") {
+                this.getView().byId("idSwitchInOut").setVisible(false);
+                return;
+            }
+
             let oViewModel = this.getModel("viewModel"),
                 sIn = "F" + iIndex,
                 sOut = "B" + iIndex;
@@ -376,10 +466,10 @@ sap.ui.define([
             oViewModel.setProperty("/In", sIn);
             this.getView().byId("idSwitchInOut").setVisible(true);
         },
-        _clearForm: async function (bCheck) {
+        _clearForm: async function (sCheck) {
             let oViewModel = this.getModel("viewModel");
             sap.ui.getCore().getMessageManager().removeAllMessages();
-            if (bCheck === "AAC") {
+            if (sCheck === "AAC") {
                 oViewModel.setProperty("/Barcode", "");
                 oViewModel.setProperty("/BarcodeForm", "");
                 oViewModel.setProperty("/Owner", "");

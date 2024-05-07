@@ -2,7 +2,9 @@
 	<l:Grid defaultSpan="XL6 L6 M6 S12">
 		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="4" emptySpanXL="0" columnsXL="2" singleContainerFullSize="false">
 			<Label width="auto" id="_IDGenLabel11" text="{i18n>warehouseLocationInputTitle}"/>
-			<Input id="idWH" showValueHelp="true" valueHelpRequest="onValueHelpLgpla" value="{viewModel>/Lgpla}">
+			<Input id="idWH" showValueHelp="true" valueHelpRequest="onValueHelpLgpla" value="{viewModel>/Lgpla}" change="onLgplaInputChange"
+			valueStateText="Farklı bir adres girilemez" valueState="{viewModel>/LgplaValueState}"
+			>
 				<layoutData>
 					<l:GridData span="XL4 L4 M4 S6"/>
 				</layoutData>
@@ -11,7 +13,7 @@
 				</suggestionItems>
 			</Input>
 			<Label width="auto" text="{i18n>scanBarcodeInputTitle}"/>
-			<Input id="idBarcode" value="{viewModel>/Barcode}" submit="onChangeBarcode">
+			<Input id="idBarcode" value="{viewModel>/Barcode}" liveChange="onChangeBarcode">
 				<layoutData>
 					<l:GridData span="XL8 L8 M8 S8"/>
 				</layoutData>

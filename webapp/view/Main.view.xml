@@ -1,36 +1,94 @@
-<mvc:View xmlns:layout="sap.ui.layout" xmlns:form="sap.ui.layout.form" xmlns:f="sap.f" controllerName="com.eren.counting.controller.Main"
-	xmlns:mvc="sap.ui.core.mvc" xmlns="sap.m" xmlns:c="sap.ui.core" displayBlock="true" height="100%" busyIndicatorDelay="0">
+<mvc:View
+	xmlns:layout="sap.ui.layout"
+	xmlns:form="sap.ui.layout.form"
+	xmlns:f="sap.f"
+	controllerName="com.eren.counting.controller.Main"
+	xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+	xmlns:tnt="sap.tnt"
+	displayBlock="true"
+	height="100%"
+	busyIndicatorDelay="0"
+>
 	<f:DynamicPage>
 		<f:content>
-			<form:SimpleForm >
+			<form:SimpleForm>
 				<form:content>
 					<Toolbar ariaLabelledBy="Title2">
 						<content>
-							<Title id="Title2" text="{i18n>mainFormTitle}"></Title>
+							<Title
+								id="Title2"
+								text="{i18n>mainFormTitle}"
+							/>
 						</content>
 					</Toolbar>
-					<layout:Grid defaultSpan="XL6 L6 M6 S12" defaultIndent="XL0 L0 M0 S0" position="Left" vSpacing="0" hSpacing="0">
-						<form:SimpleForm columnsXL="2" editable="true" emptySpanXL="0" labelSpanM="4" labelSpanS="4" labelSpanXL="4" layout="ResponsiveGridLayout">
+					<layout:Grid
+						defaultSpan="XL6 L6 M6 S12"
+						defaultIndent="XL0 L0 M0 S0"
+						position="Left"
+						vSpacing="0"
+						hSpacing="0"
+					>
+						<form:SimpleForm
+							columnsXL="2"
+							editable="true"
+							emptySpanXL="0"
+							labelSpanM="4"
+							labelSpanS="4"
+							labelSpanXL="4"
+							layout="ResponsiveGridLayout"
+						>
 							<form:content>
-								<Label text="{i18n>warehouseNumberInputTitle}"/>
-								<Input id="initialPageWarehouseNoInput"
-									value="{ path: 'viewModel>/Lgnum', type : 'sap.ui.model.type.String', constraints : { minLength: 1, maxLength: 300 } }" enabled="false"/>
-								<Label text="{i18n>warehouseCountingDocumentInputTitle}"/>
-								<Input id="initialPageCountingDocumentInput" 
-									maxLength="20" value="{ path: 'viewModel>/DocNumber', type : 'sap.ui.model.type.String', constraints : { minimum: 1 } }"/>
-								<Label text="{i18n>warehouseCountingYearInputTitle}"/>
-								<DatePicker id="initialPageCountingYearInput" showCurrentDateButton="true" width="100%"  change="onChangeDate"
-										value="{
-						'path': 'viewModel>/DocYear',
-						'type': 'sap.ui.model.type.Date',
-						'formatOptions': {
-							'pattern': 'yyyy'
-						}
-					}"/>
-								<Label text=""/>
+								<Label text="{i18n>warehouseNumberInputTitle}" />
+								<tnt:InfoLabel id="il4" text="{viewModel>/Lgnum}" colorScheme="1" displayOnly= "true" />
+								<!-- <Input
+									id="initialPageWarehouseNoInput"
+									value="{
+										path: 'viewModel>/Lgnum',
+										type: 'sap.ui.model.type.String',
+										constraints: {
+											minLength: 1,
+											maxLength: 300
+										}
+									}"
+									enabled="false"
+								/> -->
+								<Label text="{i18n>warehouseCountingDocumentInputTitle}" />
+								<Input
+									id="initialPageCountingDocumentInput"
+									maxLength="20"
+									value="{
+										path: 'viewModel>/DocNumber',
+										type: 'sap.ui.model.type.String',
+										constraints: {
+											minimum: 1
+										}
+									}"
+								/>
+								<Label text="{i18n>warehouseCountingYearInputTitle}" />
+								<DatePicker
+									id="initialPageCountingYearInput"
+									showCurrentDateButton="true"
+									width="100%"
+									change="onChangeDate"
+									value="{
+										path: 'viewModel>/DocYear',
+										type: 'sap.ui.model.type.Date',
+										formatOptions: {
+											pattern: 'yyyy'
+										}
+									}"
+								/>
+								<Label text="" />
 								<HBox justifyContent="End">
-									<Button id="initialScreenSubmitButton" icon="sap-icon://initiative" text="{i18n>next}" type="Emphasized" iconFirst="false"
-										press="onNextPage"/>
+									<Button
+										id="initialScreenSubmitButton"
+										icon="sap-icon://initiative"
+										text="{i18n>next}"
+										type="Emphasized"
+										iconFirst="false"
+										press="onNextPage"
+									/>
 								</HBox>
 							</form:content>
 						</form:SimpleForm>
