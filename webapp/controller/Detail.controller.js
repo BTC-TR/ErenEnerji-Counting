@@ -464,6 +464,7 @@ sap.ui.define([
                 sOut = "B" + iIndex;
             oViewModel.setProperty("/Out", sOut);
             oViewModel.setProperty("/In", sIn);
+            this.getView().byId("idSwitchInOut").setState(true);
             this.getView().byId("idSwitchInOut").setVisible(true);
         },
         _clearForm: async function (sCheck) {

@@ -13,13 +13,21 @@
 				</suggestionItems>
 			</Input>
 			<Label width="auto" text="{i18n>scanBarcodeInputTitle}"/>
-			<Input id="idBarcode" value="{viewModel>/Barcode}" liveChange="onChangeBarcode">
+			<Input id="idBarcode" value="{viewModel>/Barcode}" submit="onChangeBarcode"
+			 valueHelpRequest="onChangeBarcode" valueHelpIconSrc="sap-icon://search" showValueHelp="true">
 				<layoutData>
 					<l:GridData span="XL8 L8 M8 S8"/>
 				</layoutData>
 			</Input>
 			<Label width="auto" text="{i18n>Matnr}"/>
-			<Text text="{viewModel>/BarcodeForm/Matnr} {viewModel&gt;/BarcodeForm/Maktx}">
+			<Text text="{viewModel>/BarcodeForm/Matnr}">
+				<layoutData>
+					<l:GridData span="XL4 L4 M4 S6"/>
+				</layoutData>
+			</Text>
+
+				<Label width="auto" text="{i18n>MatnrDesc}"/>
+			<Text text="{viewModel>/BarcodeForm/Maktx}">
 				<layoutData>
 					<l:GridData span="XL4 L4 M4 S6"/>
 				</layoutData>
