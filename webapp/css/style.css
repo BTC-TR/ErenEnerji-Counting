@@ -25,7 +25,7 @@ label {
   }
 
 .sapMSwt.sapMSwtOff:not(.sapMSwtAcceptReject) {
-    background-color: #feebeb !important;
+    background-color: #ee2828 !important;
 }
 .sapMSwtLabelOff {
     color: black !important;

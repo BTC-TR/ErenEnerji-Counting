@@ -1,7 +1,6 @@
 <core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout">
 	<l:Grid defaultSpan="XL6 L6 M6 S12">
-		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="4" emptySpanXL="0" columnsXL="2"
-			singleContainerFullSize="false">
+		<f:SimpleForm editable="true" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="4" emptySpanXL="0" columnsXL="2" singleContainerFullSize="false">
 			<Label width="auto" id="_IDGenLabel11" text="{i18n>warehouseLocationInputTitle}"/>
 			<Input id="idWH" showValueHelp="true" valueHelpRequest="onValueHelpLgpla" value="{viewModel>/Lgpla}">
 				<layoutData>
@@ -18,7 +17,7 @@
 				</layoutData>
 			</Input>
 			<Label width="auto" text="{i18n>Matnr}"/>
-			<Text text="{viewModel>/BarcodeForm/Matnr} {viewModel>/BarcodeForm/Maktx}">
+			<Text text="{viewModel>/BarcodeForm/Matnr} {viewModel&gt;/BarcodeForm/Maktx}">
 				<layoutData>
 					<l:GridData span="XL4 L4 M4 S6"/>
 				</layoutData>
@@ -29,7 +28,7 @@
 					<l:GridData span="XL4 L4 M4 S6"/>
 				</layoutData>
 			</Text>
-			<Label  width="auto" text="{i18n>Owners}" required="true"/>
+			<Label width="auto" text="{i18n>Owners}" required="true"/>
 			<Select id="idOwners" items="{viewModel>/Owners}" selectedKey="{viewModel>/Owner}" change="onChangeOwner">
 				<core:Item key="{viewModel>Owner}" text="{viewModel>OwnerText}"/>
 				<layoutData>
@@ -43,9 +42,9 @@
 					<l:GridData span="XL4 L4 M4 S6"/>
 				</layoutData>
 			</Input>
-			<Text text="{viewModel>/BarcodeForm/Meins}"></Text>
+			<Text text="{viewModel>/BarcodeForm/Meins}"/>
 				<Label width="auto" id="_IDGenLabel3" text="{i18n>InOut}" required="false"/>
-			<Switch  change="onChangeSwitchInOut" id="idSwitchInOut" state="true"  customTextOn="{viewModel>/In}" customTextOff="{viewModel>/Out}">
+			<Switch change="onChangeSwitchInOut" id="idSwitchInOut" customTextOn="{viewModel>/In}" customTextOff="{viewModel>/Out}">
 				<layoutData>
 					<FlexItemData id="_IDGenFlexItemData1" growFactor="1"/>
 				</layoutData>
