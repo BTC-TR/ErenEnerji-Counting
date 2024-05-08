@@ -82,6 +82,8 @@ sap.ui.define([
                         oViewModel.setProperty("/Owners", oData.to_items.results);
                         oViewModel.setProperty("/BarcodeForm", oData.to_items.results.at(-1));
 
+                        this._focusOnInput("idQuan");
+
                         //if the owner list only one then set the first row to stock type 
                         if (oData.to_items.results.length === 1) {
                             oViewModel.setProperty("/Owner", oData.to_items.results.at(-1).Owner);
@@ -129,6 +131,7 @@ sap.ui.define([
                         //  this._showMessageBox(oData.Message, oData.Type, true);
                         this._clearForm("AAC"); //After Address Count
                         this._getCountingDetail();
+                        this._focusOnInput("idBarcode");
                     }
                 },
                     fnError = (err) => { },
@@ -145,6 +148,7 @@ sap.ui.define([
         onChangeOwner: async function (oEvent) {
             let iIndex = oEvent.getParameter("selectedItem").getProperty("text").slice(0, 1);
             this._setStockType(iIndex);
+            this._focusOnInput("idQuan");
         },
 
 
@@ -153,7 +157,7 @@ sap.ui.define([
             let DialogType = mobileLibrary.DialogType,
                 ButtonType = mobileLibrary.ButtonType;
 
-            
+
 
             if (!this.oApproveDialog) {
                 this.oApproveDialog = new Dialog({
@@ -259,36 +263,36 @@ sap.ui.define([
 
 
         },
-        _getCountingCheck: async function(){
+        _getCountingCheck: async function () {
             let oViewModel = this.getModel("viewModel"),
-            oDocYear = oViewModel.getProperty("/DocYearD"),
-            oDocNumber = oViewModel.getProperty("/DocNumber"),
-            oLgnum = oViewModel.getProperty("/Lgnum");
-        if (oDocNumber && oDocYear) {
-            sap.ui.core.BusyIndicator.show(0);
-            let fnSuccess = (oData) => {
-                sap.ui.core.BusyIndicator.hide();
-                let oMessage = oData.Message,
-                    messageType = oData.Type;
-                if (oMessage && messageType === "E") { // if (message && messageType === "E")
-                    this._showMessageBox(oMessage, messageType);
-                // anasayfaya yönlendir.
-                    this.getRouter().navTo("RouteMain", {});
-                } else {
-                    this._getCounting(String(oDocYear), oDocNumber, oLgnum, true);
-                }
-
-            },
-                fnError = (err) => { },
-                fnFinally = () => {
-                    oViewModel.setProperty("/busy", false);
+                oDocYear = oViewModel.getProperty("/DocYearD"),
+                oDocNumber = oViewModel.getProperty("/DocNumber"),
+                oLgnum = oViewModel.getProperty("/Lgnum");
+            if (oDocNumber && oDocYear) {
+                sap.ui.core.BusyIndicator.show(0);
+                let fnSuccess = (oData) => {
                     sap.ui.core.BusyIndicator.hide();
-                };
-            await this._countingCheck(oDocYear, oDocNumber, oLgnum)
-                .then(fnSuccess)
-                .catch(fnError)
-                .finally(fnFinally);
-        }
+                    let oMessage = oData.Message,
+                        messageType = oData.Type;
+                    if (oMessage && messageType === "E") { // if (message && messageType === "E")
+                        this._showMessageBox(oMessage, messageType);
+                        // anasayfaya yönlendir.
+                        this.getRouter().navTo("RouteMain", {});
+                    } else {
+                        this._getCounting(String(oDocYear), oDocNumber, oLgnum, true);
+                    }
+
+                },
+                    fnError = (err) => { },
+                    fnFinally = () => {
+                        oViewModel.setProperty("/busy", false);
+                        sap.ui.core.BusyIndicator.hide();
+                    };
+                await this._countingCheck(oDocYear, oDocNumber, oLgnum)
+                    .then(fnSuccess)
+                    .catch(fnError)
+                    .finally(fnFinally);
+            }
         },
         onBack: function () {
             history.go(-1);
