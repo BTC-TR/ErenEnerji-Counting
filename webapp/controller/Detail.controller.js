@@ -153,7 +153,7 @@ sap.ui.define([
             let DialogType = mobileLibrary.DialogType,
                 ButtonType = mobileLibrary.ButtonType;
 
-            let oObject = oEvent.getSource().getParent().getParent().getSelectedItem().getBindingContext("viewModel").getObject();
+            
 
             if (!this.oApproveDialog) {
                 this.oApproveDialog = new Dialog({
@@ -166,6 +166,7 @@ sap.ui.define([
                         type: ButtonType.Emphasized,
                         text: "Sil",
                         press: function () {
+                            let oObject = that.byId("idTable").getSelectedContexts()[0].getObject();
                             that._deleteItem(oObject);
                             this.oApproveDialog.close();
                         }.bind(this),
@@ -218,23 +219,76 @@ sap.ui.define([
         },
 
         onSave: async function (oEvent) {
+
             const oViewModel = this.getModel("viewModel"),
                 oDocNumber = oViewModel.getProperty("/DocNumber"),
                 oDocYear = oViewModel.getProperty("/DocYearD"),
                 oLgnum = oViewModel.getProperty("/Lgnum"),
-                oLgpla = oViewModel.getProperty("/Lgpla"),
-                aFilters = [
-                    new Filter("IvDocNumber", FilterOperator.EQ, oDocNumber),
-                    new Filter("IvDocYear", FilterOperator.EQ, oDocYear),
-                    new Filter("IvLgnum", FilterOperator.EQ, oLgnum),
-                    new Filter("IvLgpla", FilterOperator.EQ, oLgpla),
-                ];
-            this._getMultiData("/CountingSaveSet", aFilters, this.getModel())
-                .then((oData) => {
-                    //     oViewModel.setProperty("/List", oData.results);
-                })
-                .catch(() => { })
-                .finally(() => { });
+                oLgpla = oViewModel.getProperty("/Lgpla");
+            this.getView().byId("idSwitchInOut").setVisible(false);
+
+            let fnSuccess = (oData) => {
+                debugger;
+                this._getCountingCheck();
+                this._getCountingDetail();
+                this.getModel().refresh(true);
+                this._showMessageBox(oData.to_return_structure.Message, oData.to_return_structure.Type);
+
+            },
+                fnError = (err) => {
+                    sap.ui.core.BusyIndicator.hide();
+                    this._showMessageBox(err.responseText, "E");
+                },
+                fnFinally = () => {
+                    oViewModel.setProperty("/busy", false);
+                };
+
+
+            let that = this;
+            sap.m.MessageBox.warning("Sayım kaydedilecektir, emin misiniz ?", {
+                actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
+                emphasizedAction: MessageBox.Action.OK,
+                onClose: function (sAction) {
+                    if (sAction === "OK") {
+                        that._save(oDocNumber, oDocYear, oLgnum, oLgpla).then(fnSuccess).catch(fnError).finally(fnFinally);
+                    }
+                }
+            });
+
+
+
+
+        },
+        _getCountingCheck: async function(){
+            let oViewModel = this.getModel("viewModel"),
+            oDocYear = oViewModel.getProperty("/DocYearD"),
+            oDocNumber = oViewModel.getProperty("/DocNumber"),
+            oLgnum = oViewModel.getProperty("/Lgnum");
+        if (oDocNumber && oDocYear) {
+            sap.ui.core.BusyIndicator.show(0);
+            let fnSuccess = (oData) => {
+                sap.ui.core.BusyIndicator.hide();
+                let oMessage = oData.Message,
+                    messageType = oData.Type;
+                if (oMessage && messageType === "E") { // if (message && messageType === "E")
+                    this._showMessageBox(oMessage, messageType);
+                // anasayfaya yönlendir.
+                    this.getRouter().navTo("RouteMain", {});
+                } else {
+                    this._getCounting(String(oDocYear), oDocNumber, oLgnum, true);
+                }
+
+            },
+                fnError = (err) => { },
+                fnFinally = () => {
+                    oViewModel.setProperty("/busy", false);
+                    sap.ui.core.BusyIndicator.hide();
+                };
+            await this._countingCheck(oDocYear, oDocNumber, oLgnum)
+                .then(fnSuccess)
+                .catch(fnError)
+                .finally(fnFinally);
+        }
         },
         onBack: function () {
             history.go(-1);
@@ -244,7 +298,7 @@ sap.ui.define([
         },
         onEmptyShelf: async function () {
             let that = this;
-            MessageBox.warning(this.getResourceBundle().getText("errorShelf"),{
+            MessageBox.warning(this.getResourceBundle().getText("errorShelf"), {
                 actions: [MessageBox.Action.OK, MessageBox.Action.CANCEL],
                 emphasizedAction: MessageBox.Action.OK,
                 onClose: function (sAction) {
@@ -328,7 +382,6 @@ sap.ui.define([
 
                         let oMessage = oData.Message,
                             oType = oData.Type;
-                        // console.log(oData, oResponse);
                         that._showMessageBox(oMessage, oType);
                         that._clearForm("");
 
@@ -369,6 +422,26 @@ sap.ui.define([
                 oModel.read(sSet, mParameters);
             });
         },
+        _save: async function (oDocNumber, oDocYear, oLgnum, oLgpla) {
+
+            let oModel = this.getModel(),
+                oDeepEntity = {};
+
+            oDeepEntity.IvDocNumber = oDocNumber;
+            oDeepEntity.IvDocYear = oDocYear;
+            oDeepEntity.IvLgnum = oLgnum;
+            oDeepEntity.IvLgpla = oLgpla;
+            oDeepEntity.to_return_structure = {};
+            oDeepEntity.to_returns = [];
+            return new Promise((fnResolve, fnReject) => {
+                let oParams = {
+                    success: fnResolve,
+                    error: fnReject,
+                };
+                oModel.create("/CountingSaveSet", oDeepEntity, oParams);
+            });
+
+        },
         _getBarcodeData: async function (oMatnr, oCharg, oLgpla) {
             let oModel = this.getModel(),
                 oDeepEntity = {};
@@ -392,7 +465,8 @@ sap.ui.define([
                 oDocYear = oObject.DocYear,
                 oLgpla = oObject.Lgpla,
                 oMatnr = oObject.Matnr,
-                oCharg = oObject.Charg;
+                oCharg = oObject.Charg,
+                oOwner = oObject.Owner;
             sap.ui.core.BusyIndicator.show(0);
             let fnSuccess = (oData) => {
                 if (oData.Type === "E") {
@@ -407,12 +481,12 @@ sap.ui.define([
                     oViewModel.setProperty("/busy", false);
                     sap.ui.core.BusyIndicator.hide();
                 };
-            await this._deleteItemData(oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg)
+            await this._deleteItemData(oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg, oOwner)
                 .then(fnSuccess)
                 .catch(fnError)
                 .finally(fnFinally);
         },
-        _deleteItemData: function (oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg) {
+        _deleteItemData: function (oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg, oOwner) {
             let oModel = this.getModel();
             return new Promise((fnResolve, fnReject) => {
                 let oParams = {
@@ -425,7 +499,8 @@ sap.ui.define([
                         IvDocYear: oDocYear,
                         IvLgpla: oLgpla,
                         IvMatnr: oMatnr,
-                        IvCharg: oCharg
+                        IvCharg: oCharg,
+                        IvOwner: oOwner
                     });
                 oModel.read(sPath, oParams);
             });

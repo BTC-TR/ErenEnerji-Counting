@@ -43,9 +43,9 @@ sap.ui.define([
                     let oMessage = oData.Message,
                         messageType = oData.Type;
                     if (oMessage && messageType === "E") { // if (message && messageType === "E")
-                        this._showMessageBox(oMessage, messageType, true);
+                        this._showMessageBox(oMessage, messageType);
                     } else {
-                        this._getCounting(oDocYear, oDocNumber, oLgnum);
+                        this._getCounting(String(oDocYear), oDocNumber, oLgnum);
                     }
 
                 },
@@ -62,14 +62,14 @@ sap.ui.define([
         },
         onChangeDate: async function () {
             let oViewModel = this.getModel("viewModel"),
-            oDocYear = this.getView().byId("initialPageCountingYearInput").getValue(),
-            oDocNumber = oViewModel.getProperty("/DocNumber");
+                oDocYear = this.getView().byId("initialPageCountingYearInput").getValue(),
+                oDocNumber = oViewModel.getProperty("/DocNumber");
             oViewModel.setProperty("/DocYearD", oDocYear);
-        if (oDocNumber && oDocYear) {
-            this.onNextPage();
+            if (oDocNumber && oDocYear) {
+                this.onNextPage();
 
-        }
-    },
+            }
+        },
 
         /* =========================================================== */
         /* internal methods                                            */
@@ -80,63 +80,7 @@ sap.ui.define([
                 this._focusOnInput('initialPageCountingDocumentInput');
             });
 
-        },
-
-        _countingCheck: function (oDocYear, oDocNumber, oLgnum) {
-            let oModel = this.getModel();
-
-            return new Promise((fnResolve, fnReject) => {
-                let oParams = {
-                    success: fnResolve,
-                    error: fnReject,
-                },
-                    sPath = oModel.createKey("/CountingCheckSet", {
-                        IvDocNumber: oDocNumber,
-                        IvDocYear: oDocYear,
-                        IvLgnum: oLgnum
-                    });
-                oModel.read(sPath, oParams);
-            });
-        },
-        _getCounting: async function (oDocYear, oDocNumber, oLgnum) {
-            let oViewModel = this.getModel("viewModel"),
-                fnSuccess = (oData) => {
-                    oViewModel.setProperty("/DetailData", oData.to_items.results);
-                    let oMessage = oData.to_return.Message,
-                        messageType = oData.to_return.Type;
-                    if (oMessage && messageType === "E") {
-                        this._showMessageBox(oMessage, messageType, true);
-                    } else {
-                        this.getRouter().navTo("detail");
-                    }
-                },
-                fnError = (err) => { },
-                fnFinally = () => {
-                    oViewModel.setProperty("/busy", false);
-                };
-            await this._getCountingData(oDocYear, oDocNumber, oLgnum)
-                .then(fnSuccess)
-                .catch(fnError)
-                .finally(fnFinally);
-        },
-        _getCountingData: async function (oDocYear, oDocNumber, oLgnum) {
-            let oModel = this.getModel();
-            let oEntry = {
-                IvDocNumber: oDocNumber,
-                IvDocYear: oDocYear,
-                IvLgnum: oLgnum
-            }
-            oEntry.to_items = [];
-            oEntry.to_return = {};
-            return new Promise((fnResolve, fnReject) => {
-                let oParams = {
-                    success: fnResolve,
-                    error: fnReject,
-                };
-                oModel.create("/CountingGetHeaderSet", oEntry, oParams);
-            });
         }
-
 
 
     });
