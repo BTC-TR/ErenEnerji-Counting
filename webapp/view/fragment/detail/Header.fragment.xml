@@ -5,16 +5,7 @@
 	xmlns:l="sap.ui.layout"
 >
 	<l:Grid defaultSpan="XL6 L6 M6 S12">
-		<f:SimpleForm
-			editable="true"
-			layout="ResponsiveGridLayout"
-			labelSpanXL="4"
-			labelSpanM="4"
-			labelSpanS="4"
-			emptySpanXL="0"
-			columnsXL="2"
-			singleContainerFullSize="false"
-		>
+		   <f:SimpleForm id="_IDGenSimpleForm1" editable="false" layout="ColumnLayout">
 			<Label
 				width="auto"
 				id="_IDGenLabel11"
@@ -118,8 +109,11 @@
 				<layoutData>
 					<l:GridData span="XL4 L4 M4 S6" />
 				</layoutData>
+					<customData>
+							<core:CustomData key="meins" writeToDom="true" value="{viewModel>/BarcodeForm/Meins}"></core:CustomData>
+						</customData>
 			</Input>
-			<Text text="{viewModel>/BarcodeForm/Meins}" />
+			<!-- <Text text="{viewModel>/BarcodeForm/Meins}" /> -->
 			<Label
 				width="auto"
 				id="_IDGenLabel3"
