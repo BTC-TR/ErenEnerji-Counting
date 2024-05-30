@@ -4,8 +4,9 @@
 	xmlns:f="sap.ui.layout.form"
 	xmlns:l="sap.ui.layout"
 >
-	<l:Grid defaultSpan="XL6 L6 M6 S12">
-		   <f:SimpleForm id="_IDGenSimpleForm1" editable="false" layout="ColumnLayout">
+	<!-- <l:Grid defaultSpan="XL6 L6 M6 S12"> -->
+		    <f:SimpleForm editable="true" id="idHeaderSimpleForm" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="12" emptySpanXL="0" columnsXL="1" singleContainerFullSize="false">
+  
 			<Label
 				width="auto"
 				id="_IDGenLabel11"
@@ -41,7 +42,7 @@
 				showValueHelp="true"
 			>
 				<layoutData>
-					<l:GridData span="XL8 L8 M8 S8" />
+					<l:GridData span="XL8 L8 M8 S12" />
 				</layoutData>
 			</Input>
 			<Label
@@ -50,7 +51,7 @@
 			/>
 			<Text text="{viewModel>/BarcodeForm/Matnr}">
 				<layoutData>
-					<l:GridData span="XL4 L4 M4 S6" />
+					<l:GridData span="XL8 L8 M8 S12" />
 				</layoutData>
 			</Text>
 			<Label
@@ -59,7 +60,7 @@
 			/>
 			<Text text="{viewModel>/BarcodeForm/Maktx}">
 				<layoutData>
-					<l:GridData span="XL4 L4 M4 S6" />
+					<l:GridData span="XL8 L8 M8 S12" />
 				</layoutData>
 			</Text>
 			<Label
@@ -71,7 +72,7 @@
 				text="{viewModel>/BarcodeForm/Charg}"
 			>
 				<layoutData>
-					<l:GridData span="XL4 L4 M4 S6" />
+					<l:GridData span="XL8 L8 M8 S12" />
 				</layoutData>
 			</Text>
 			<Label
@@ -92,7 +93,7 @@
 				<layoutData>
 					<l:GridData
 						id="_IDGenGridData1351"
-						span="XL4 L4 M4 S6"
+						span="XL8 L8 M8 S12"
 					/>
 				</layoutData>
 			</Select>
@@ -107,7 +108,7 @@
 				value="{viewModel>/Quantity}"
 			>
 				<layoutData>
-					<l:GridData span="XL4 L4 M4 S6" />
+					<l:GridData span="XL8 L8 M8 S12" />
 				</layoutData>
 					<customData>
 							<core:CustomData key="meins" writeToDom="true" value="{viewModel>/BarcodeForm/Meins}"></core:CustomData>
@@ -134,5 +135,5 @@
 				</layoutData>
 			</Switch>
 		</f:SimpleForm>
-	</l:Grid>
+	<!-- </l:Grid> -->
 </core:FragmentDefinition>

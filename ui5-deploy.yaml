@@ -20,6 +20,6 @@ builder:
           name: ZEWM_COUNTING
           description: Counting App
           package: ZFIORI_EWM
-          transport: DS4K900312
+          transport: DS4K900446
         exclude:
           - /test/
