@@ -33,10 +33,11 @@ sap.ui.define([
         onNextPage: async function () {
 
             let oViewModel = this.getModel("viewModel"),
-                oDocYear = this.getView().byId("initialPageCountingYearInput").getValue(),
+               // oDocYear = this.getView().byId("initialPageCountingYearInput").getValue(),
+                oDocYear = "",
                 oDocNumber = oViewModel.getProperty("/DocNumber"),
                 oLgnum = oViewModel.getProperty("/Lgnum");
-            if (oDocNumber && oDocYear) {
+            if (oDocNumber) {
                 sap.ui.core.BusyIndicator.show(0);
                 let fnSuccess = (oData) => {
                     sap.ui.core.BusyIndicator.hide();

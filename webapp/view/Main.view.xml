@@ -65,7 +65,7 @@
 										}
 									}"
 								/>
-								<Label text="{i18n>warehouseCountingYearInputTitle}" />
+								<!-- <Label text="{i18n>warehouseCountingYearInputTitle}" />
 								<DatePicker
 									id="initialPageCountingYearInput"
 									showCurrentDateButton="true"
@@ -78,7 +78,7 @@
 											pattern: 'yyyy'
 										}
 									}"
-								/>
+								/> -->
 								<Label text="" />
 								<HBox justifyContent="End">
 									<Button
