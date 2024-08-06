@@ -82,6 +82,8 @@ sap.ui.define([
                         oViewModel.setProperty("/Owners", oData.to_items.results);
                         oViewModel.setProperty("/BarcodeForm", oData.to_items.results.at(-1));
 
+                        oViewModel.setProperty("/BarcodeForm/Charg", oData.IvCharg);
+
                         this._focusOnInput("idQuan");
 
                         //if the owner list only one then set the first row to stock type 
