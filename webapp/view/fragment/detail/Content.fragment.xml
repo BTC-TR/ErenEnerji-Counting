@@ -11,6 +11,9 @@
 		</headerToolbar>
 		<columns>	
 			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
+				<Text text="{i18n>Lgpla}"/>
+			</Column>
+			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
 				<Text text="{i18n>Matnr}"/>
 			</Column>
 			<Column hAlign="Center" minScreenWidth="Tablet" demandPopin="true">
@@ -28,7 +31,8 @@
 		</columns>
 		<items>
 			<ColumnListItem>
-				<cells>				
+				<cells>
+					<ObjectNumber state="Error" number="{viewModel>Lgpla}"/>				
 					<ObjectNumber state="Error" number="{viewModel>Matnr}"/>
 					<ObjectNumber state="Success" number="{viewModel>Charg}"/>
 					<ObjectNumber state="Warning" number="{viewModel>Cat}"/>
