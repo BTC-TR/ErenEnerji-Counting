@@ -22,12 +22,8 @@
 				valueState="{viewModel>/LgplaValueState}"
 				placeholder="{i18n>LgplaEnter}"
 				tooltip="{i18n>Lgpla}"
-				suggestionItems="{viewModel>/LgplaList}"
-				showSuggestion="true"
 			>
-				<suggestionItems>
-					<core:Item text="{viewModel>LocParentLgpla}" />
-				</suggestionItems>
+			
 			</Input>
 			<Label
 				width="auto"
