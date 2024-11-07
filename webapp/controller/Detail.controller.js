@@ -118,6 +118,7 @@ sap.ui.define([
                 oMatnr = oViewModel.getProperty("/BarcodeForm/Matnr"),
                 oCharg = oViewModel.getProperty("/BarcodeForm/Charg"),
                 oMenge = oViewModel.getProperty("/Quantity"),
+                //oMenge = this.getView().byId("idQuan").getValue(),                
                 oMeins = oViewModel.getProperty("/BarcodeForm/Meins"),
                 oOwner = oViewModel.getProperty("/Owner");
             let oCat;
@@ -141,7 +142,7 @@ sap.ui.define([
                         oViewModel.setProperty("/busy", false);
                         sap.ui.core.BusyIndicator.hide();
                     };
-                await this._addressCount(oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg, parseInt(oMenge), oMeins, oOwner, oCat)
+                await this._addressCount(oLgnum, oDocNumber, oDocYear, oLgpla, oMatnr, oCharg, this.formatter.changeNumber(oMenge), oMeins, oOwner, oCat)
                     .then(fnSuccess)
                     .catch(fnError)
                     .finally(fnFinally);
@@ -575,8 +576,32 @@ sap.ui.define([
                 oViewModel.setProperty("/Owner", "");
                 oViewModel.setProperty("/Owners", []);
                 oViewModel.setProperty("/Quantity", "");
+                this.getView().byId("idQuan").setValue("");
                 this.getView().byId("idSwitchInOut").setVisible(false);
             }
         },
+
+        onQuantityLiveChange: function(oEvent) {
+            let sValue = oEvent.getParameter("value");
+
+            let oViewModel = this.getView().getModel("viewModel"),
+                sMeins = oViewModel.getProperty("/BarcodeForm/Meins"),
+                sFilteredValue;
+        
+            if(sMeins === 'ADT' || sMeins === 'PC'){
+                  // Sadece sayıları kabul et (0-9)
+             sFilteredValue = sValue.replace(/[^0-9]/g, "");
+            }
+            else{
+            // Sayı ve yalnızca bir virgül dışında karakterleri temizle, ve sadece 1 tane virgül.
+            sFilteredValue = sValue.replace(/[^0-9,]/g, "");
+            sFilteredValue = sFilteredValue.replace(/(,.*),/g, "$1");
+            }
+                    
+            // Eğer girdi filtrelendi ise, değeri Input alanına geri yaz
+            if (sValue !== sFilteredValue) {
+                oEvent.getSource().setValue(sFilteredValue);
+            }
+        }
     });
 });

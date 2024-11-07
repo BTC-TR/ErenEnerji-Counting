@@ -37,7 +37,13 @@
 					<ObjectNumber state="Success" number="{viewModel>Charg}"/>
 					<ObjectNumber state="Warning" number="{viewModel>Cat}"/>
 					<ObjectNumber state="Information" number="{viewModel>Owner}"/>
-					<ObjectNumber number="{path:'viewModel>Menge' ,formatter: '.formatter.numberUnit'}" unit="{viewModel>Meins}"/>
+					<ObjectNumber number="{ 
+											parts: [ { path: 'viewModel>Menge' },
+													 { path: 'viewModel>Meins' } ],
+									    formatter: '.formatter.formatQuantity' }"
+							 unit="{viewModel>Meins}"/>
+
+					
 				</cells>
 			</ColumnListItem>
 		</items>

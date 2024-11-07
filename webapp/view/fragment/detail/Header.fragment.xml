@@ -1,135 +1,58 @@
-<core:FragmentDefinition
-	xmlns="sap.m"
-	xmlns:core="sap.ui.core"
-	xmlns:f="sap.ui.layout.form"
-	xmlns:l="sap.ui.layout"
->
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:l="sap.ui.layout">
 	<!-- <l:Grid defaultSpan="XL6 L6 M6 S12"> -->
-		    <f:SimpleForm editable="true" id="idHeaderSimpleForm" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="12" emptySpanXL="0" columnsXL="1" singleContainerFullSize="false">
-  
-			<Label
-				width="auto"
-				id="_IDGenLabel11"
-				text="{i18n>Lgpla}"
-			/>
-			<Input
-				id="idWH"
-				showValueHelp="true"
-				valueHelpRequest="onValueHelpLgpla"
-				value="{viewModel>/Lgpla}"
-				change="onLgplaInputChange"
-				valueStateText="{i18n>errorLgpla}"
-				valueState="{viewModel>/LgplaValueState}"
-				placeholder="{i18n>LgplaEnter}"
-				tooltip="{i18n>Lgpla}"
-			>
-			
-			</Input>
-			<Label
-				width="auto"
-				text="{i18n>scanBarcodeInputTitle}"
-			/>
-			<Input
-				id="idBarcode"
-				value="{viewModel>/Barcode}"
-				submit="onChangeBarcode"
-				valueHelpRequest="onChangeBarcode"
-				valueHelpIconSrc="sap-icon://search"
-				showValueHelp="true"
-			>
-				<layoutData>
-					<l:GridData span="XL8 L8 M8 S12" />
-				</layoutData>
-			</Input>
-			<Label
-				width="auto"
-				text="{i18n>Matnr}"
-			/>
-			<Text text="{viewModel>/BarcodeForm/Matnr}">
-				<layoutData>
-					<l:GridData span="XL8 L8 M8 S12" />
-				</layoutData>
-			</Text>
-			<Label
-				width="auto"
-				text="{i18n>MatnrDesc}"
-			/>
-			<Text text="{viewModel>/BarcodeForm/Maktx}">
-				<layoutData>
-					<l:GridData span="XL8 L8 M8 S12" />
-				</layoutData>
-			</Text>
-			<Label
-				width="auto"
-				text="{i18n>Charg}"
-			/>
-			<Text
-				id="idCharg"
-				text="{viewModel>/BarcodeForm/Charg}"
-			>
-				<layoutData>
-					<l:GridData span="XL8 L8 M8 S12" />
-				</layoutData>
-			</Text>
-			<Label
-				width="auto"
-				text="{i18n>Owners}"
-				required="true"
-			/>
-			<Select
-				id="idOwners"
-				items="{viewModel>/Owners}"
-				selectedKey="{viewModel>/Owner}"
-				change="onChangeOwner"
-			>
-				<core:Item
-					key="{viewModel>Owner}"
-					text="{viewModel>OwnerText}"
-				/>
-				<layoutData>
-					<l:GridData
-						id="_IDGenGridData1351"
-						span="XL8 L8 M8 S12"
-					/>
-				</layoutData>
-			</Select>
-			<Label
-				width="auto"
-				required="true"
-				text="{i18n>Quantity}"
-			/>
-			<Input
-				id="idQuan"
-				submit="onPressQuantity"
-				value="{viewModel>/Quantity}"
-			>
-				<layoutData>
-					<l:GridData span="XL8 L8 M8 S12" />
-				</layoutData>
-					<customData>
-							<core:CustomData key="meins" writeToDom="true" value="{viewModel>/BarcodeForm/Meins}"></core:CustomData>
-						</customData>
-			</Input>
-			<!-- <Text text="{viewModel>/BarcodeForm/Meins}" /> -->
-			<Label
-				width="auto"
-				id="_IDGenLabel3"
-				text="{i18n>InOut}"
-				required="false"
-			/>
-			<Switch
-				change="onChangeSwitchInOut"
-				id="idSwitchInOut"
-				customTextOn="{viewModel>/In}"
-				customTextOff="{viewModel>/Out}"
-			>
-				<layoutData>
-					<FlexItemData
-						id="_IDGenFlexItemData1"
-						growFactor="1"
-					/>
-				</layoutData>
-			</Switch>
-		</f:SimpleForm>
+	<f:SimpleForm editable="true" id="idHeaderSimpleForm" layout="ResponsiveGridLayout" labelSpanXL="4" labelSpanM="4" labelSpanS="12"
+		emptySpanXL="0" columnsXL="1" singleContainerFullSize="false">
+		<Label width="auto" id="_IDGenLabel11" text="{i18n>Lgpla}"/>
+		<Input id="idWH" showValueHelp="true" valueHelpRequest="onValueHelpLgpla" value="{viewModel>/Lgpla}" change="onLgplaInputChange"
+			valueStateText="{i18n>errorLgpla}" valueState="{viewModel>/LgplaValueState}" placeholder="{i18n>LgplaEnter}" tooltip="{i18n>Lgpla}"></Input>
+		<Label width="auto" text="{i18n>scanBarcodeInputTitle}"/>
+		<Input id="idBarcode" value="{viewModel>/Barcode}" submit="onChangeBarcode" valueHelpRequest="onChangeBarcode"
+			valueHelpIconSrc="sap-icon://search" showValueHelp="true">
+			<layoutData>
+				<l:GridData span="XL8 L8 M8 S12"/>
+			</layoutData>
+		</Input>
+		<Label width="auto" text="{i18n>Matnr}"/>
+		<Text text="{viewModel>/BarcodeForm/Matnr}">
+			<layoutData>
+				<l:GridData span="XL8 L8 M8 S12"/>
+			</layoutData>
+		</Text>
+		<Label width="auto" text="{i18n>MatnrDesc}"/>
+		<Text text="{viewModel>/BarcodeForm/Maktx}">
+			<layoutData>
+				<l:GridData span="XL8 L8 M8 S12"/>
+			</layoutData>
+		</Text>
+		<Label width="auto" text="{i18n>Charg}"/>
+		<Text id="idCharg" text="{viewModel>/BarcodeForm/Charg}">
+			<layoutData>
+				<l:GridData span="XL8 L8 M8 S12"/>
+			</layoutData>
+		</Text>
+		<Label width="auto" text="{i18n>Owners}" required="true"/>
+		<Select id="idOwners" items="{viewModel>/Owners}" selectedKey="{viewModel>/Owner}" change="onChangeOwner">
+			<core:Item key="{viewModel>Owner}" text="{viewModel>OwnerText}"/>
+			<layoutData>
+				<l:GridData id="_IDGenGridData1351" span="XL8 L8 M8 S12"/>
+			</layoutData>
+		</Select>
+		<Label width="auto" required="true" text="{i18n>Quantity}"/>
+		<Input id="idQuan" liveChange="onQuantityLiveChange" submit="onPressQuantity" value="{viewModel>/Quantity}">
+			<layoutData>
+				<l:GridData span="XL8 L8 M8 S12"/>
+			</layoutData>
+			<customData>
+				<core:CustomData key="meins" writeToDom="true" value="{viewModel>/BarcodeForm/Meins}"></core:CustomData>
+			</customData>
+		</Input>
+		<!-- <Text text="{viewModel>/BarcodeForm/Meins}" /> -->
+		<Label width="auto" id="_IDGenLabel3" text="{i18n>InOut}" required="false"/>
+		<Switch change="onChangeSwitchInOut" id="idSwitchInOut" customTextOn="{viewModel>/In}" customTextOff="{viewModel>/Out}">
+			<layoutData>
+				<FlexItemData id="_IDGenFlexItemData1" growFactor="1"/>
+			</layoutData>
+		</Switch>
+	</f:SimpleForm>
 	<!-- </l:Grid> -->
 </core:FragmentDefinition>
