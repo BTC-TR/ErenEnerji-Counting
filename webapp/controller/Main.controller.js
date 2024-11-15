@@ -19,7 +19,7 @@ sap.ui.define([
         onInit: function () {
             var oRouter = this.getRouter();
 
-            oRouter.getRoute("RouteMain").attachMatched(this._onRouteMatched, this);
+            oRouter.getRoute("RouteMain").attachPatternMatched(this._onRouteMatched, this);
 
         },
 
@@ -80,6 +80,8 @@ sap.ui.define([
             jQuery.sap.delayedCall(200, this, function () {
                 this._focusOnInput('initialPageCountingDocumentInput');
             });
+            debugger;
+            this.getModel("viewModel").setProperty("/DocNumber", "");
 
         }
 
