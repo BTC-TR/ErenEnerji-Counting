@@ -240,8 +240,22 @@ sap.ui.define([
                 this._getCountingCheck();
                 this._getCountingDetail();
                 this.getModel().refresh(true);
-                this._showMessageBox(oData.to_return_structure.Message, oData.to_return_structure.Type);
+                //this._showMessageBox(oData.to_return_structure.Message, oData.to_return_structure.Type);
 
+
+                if (oData.to_return_structure.Type === 'S') {
+                      MessageBox.show(oData.to_return_structure.Message, {
+                    icon: sap.m.MessageBox.Icon.SUCCESS,
+                    title: "Başarılı",
+                    actions: [sap.m.MessageBox.Action.OK],
+                    onClose: function () {
+                        that.getRouter().navTo("RouteMain", {});
+                    }.bind(this)});
+
+                }else{
+                    this._showMessageBox(oData.to_return_structure.Message, oData.to_return_structure.Type);
+                }
+              
             },
                 fnError = (err) => {
                     sap.ui.core.BusyIndicator.hide();

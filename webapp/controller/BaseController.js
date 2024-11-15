@@ -77,12 +77,7 @@ sap.ui.define([
                 MessageBox.error(message);
                 return;
             }
-
-
-
         },
-
-
 
         getRead: function (sSet, oModel) {
             return new Promise(function (fnSuccess, fnReject) {
